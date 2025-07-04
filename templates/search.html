@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Search Posts - Crypto Vault{% endblock %}
+
+{% block content %}
+<div class="dashboard-container fade-in">
+    <!-- Header Section -->
+    <div class="header">
+        <h1>🔍 Search Your Posts</h1>
+        <div class="nav-links">
+            <a href="{{ url_for('dashboard') }}">🏠 Dashboard</a>
+            <a href="{{ url_for('profile') }}">👤 Profile</a>
+            <a href="{{ url_for('update_password') }}">🔑 Password</a>
+            <a href="{{ url_for('logout') }}">🚪 Logout</a>
+        </div>
+    </div>
+
+    <!-- Search Content -->
+    <div class="posts-section">
+        <!-- Search Form -->
+        <div class="post-form">
+            <h2 style="margin-bottom: 20px; color: #333;">🔎 Find Your Messages</h2>
+            
+            <form method="POST">
+                <div class="form-group">
+                    <label for="search_query">Search Term:</label>
+                    <input type="text" name="search_query" id="search_query" 
+                           placeholder="Enter keywords to search your encrypted posts..." 
+                           required autocomplete="off">
+                    <small style="color: #6c757d; font-size: 12px;">
+                        Search through your decrypted messages for specific content
+                    </small>
+                </div>
+                
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button type="submit" class="btn">
+                        🚀 Search Posts
+                    </button>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">
+                        ↩️ Back to Dashboard
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Search Tips -->
+        <div class="post" style="background: #e3f2fd; border-color: #90caf9;">
+            <div class="post-content">
+                <h3 style="margin-bottom: 15px; color: #0d47a1;">💡 Search Tips</h3>
+                <ul style="color: #1565c0; margin: 0; padding-left: 20px;">
+                    <li>Search is case-insensitive</li>
+                    <li>Use specific keywords for better results</li>
+                    <li>Minimum 2 characters required</li>
+                    <li>Only your posts will be searched</li>
+                    <li>Posts are decrypted before searching</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

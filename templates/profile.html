@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Profile - Crypto Vault{% endblock %}
+
+{% block content %}
+<div class="dashboard-container fade-in">
+    <!-- Header Section -->
+    <div class="header">
+        <h1>👤 Your Profile</h1>
+        <div class="nav-links">
+            <a href="{{ url_for('dashboard') }}">🏠 Dashboard</a>
+            <a href="{{ url_for('search') }}">🔍 Search</a>
+            <a href="{{ url_for('update_password') }}">🔑 Password</a>
+            <a href="{{ url_for('logout') }}">🚪 Logout</a>
+        </div>
+    </div>
+
+    <!-- Profile Content -->
+    <div class="posts-section">
+        <!-- Profile Stats -->
+        <div class="profile-stats">
+            <div class="stat-card">
+                <div class="stat-number">{{ post_count }}</div>
+                <div class="stat-label">Total Posts</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ total_likes }}</div>
+                <div class="stat-label">Total Likes</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ user.created_at.strftime('%b %Y') if user.created_at else 'Unknown' }}</div>
+                <div class="stat-label">Member Since</div>
+            </div>
+        </div>
+
+        <!-- Profile Information Form -->
+        <div class="post-form">
+            <h2 style="margin-bottom: 20px; color: #333;">🔐 Encrypted Personal Information</h2>
+            
+            <form method="POST">
+                <div class="form-group">
+                    <label for="new_info">Personal Information:</label>
+                    <textarea name="new_info" id="new_info" 
+                             placeholder="Update your encrypted personal information..." 
+                             required data-max-length="500" rows="6">{{ info }}</textarea>
+                    <small style="color: #6c757d; font-size: 12px;">
+                        This information is encrypted before being stored in the database
+                    </small>
+                </div>
+                
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button type="submit" class="btn">
+                        💾 Update Information
+                    </button>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">
+                        ↩️ Back to Dashboard
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Account Management -->
+        <div class="post-form" style="background: #fff3cd; border-color: #ffeaa7;">
+            <h3 style="margin-bottom: 15px; color: #856404;">⚙️ Account Management</h3>
+            <p style="color: #856404; margin-bottom: 20px;">
+                Manage your account security and settings
+            </p>
+            
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <a href="{{ url_for('update_password') }}" class="btn btn-secondary">
+                    🔑 Change Password
+                </a>
+                <button onclick="confirmLogout()" class="btn btn-danger">
+                    🚪 Logout
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function confirmLogout() {
+    if (confirm('Are you sure you want to logout?')) {
+        window.location.href = '{{ url_for("logout") }}';
+    }
+}
+</script>
+{% endblock %}

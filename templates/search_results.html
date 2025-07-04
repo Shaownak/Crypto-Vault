@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results - Crypto Vault{% endblock %}
+
+{% block content %}
+<div class="dashboard-container fade-in">
+    <!-- Header Section -->
+    <div class="header">
+        <h1>🔍 Search Results</h1>
+        <div class="nav-links">
+            <a href="{{ url_for('dashboard') }}">🏠 Dashboard</a>
+            <a href="{{ url_for('profile') }}">👤 Profile</a>
+            <a href="{{ url_for('search') }}">🔍 New Search</a>
+            <a href="{{ url_for('logout') }}">🚪 Logout</a>
+        </div>
+    </div>
+
+    <!-- Search Results Content -->
+    <div class="search-results">
+        <!-- Search Summary -->
+        <div class="post-form" style="background: #f8f9fa;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                <div>
+                    <h3 style="margin: 0; color: #333;">Search Query: "{{ search_query }}"</h3>
+                    <p class="result-count" style="margin: 5px 0 0 0;">
+                        Found {{ result_count }} result{{ 's' if result_count != 1 else '' }}
+                    </p>
+                </div>
+                <div>
+                    <a href="{{ url_for('search') }}" class="btn btn-secondary">
+                        🔍 New Search
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results List -->
+        {% if posts %}
+            {% for post in posts %}
+            <div class="post">
+                <div class="post-content">
+                    <div class="post-message">{{ post.message }}</div>
+                    <div class="post-meta">
+                        <span>📅 {{ post.created_at }}</span>
+                        <span>❤️ {{ post.likes }} likes</span>
+                    </div>
+                </div>
+                <div class="post-actions">
+                    <button class="like-btn" data-post-id="{{ post.id }}">
+                        👍 Like (<span class="likes-count">{{ post.likes }}</span>)
+                    </button>
+                    <button class="delete-btn" data-post-id="{{ post.id }}">
+                        🗑️ Delete
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="post" style="text-align: center; background: #fff3cd; border-color: #ffeaa7;">
+                <div class="post-content">
+                    <h3 style="color: #856404; margin: 0;">🔍 No Results Found</h3>
+                    <p style="color: #856404; margin: 10px 0 0 0;">
+                        No posts found matching "{{ search_query }}". Try different keywords or check your spelling.
+                    </p>
+                </div>
+                <div style="margin-top: 20px;">
+                    <a href="{{ url_for('search') }}" class="btn btn-secondary">
+                        🔍 Try Another Search
+                    </a>
+                    <a href="{{ url_for('dashboard') }}" class="btn" style="margin-left: 10px;">
+                        🏠 Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- Quick Actions -->
+        {% if posts %}
+        <div class="post-form" style="background: #e8f5e8; border-color: #c3e6c3;">
+            <h3 style="margin-bottom: 15px; color: #155724;">✨ Quick Actions</h3>
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <a href="{{ url_for('search') }}" class="btn btn-secondary">
+                    🔍 Search Again
+                </a>
+                <a href="{{ url_for('dashboard') }}" class="btn">
+                    🏠 Back to Dashboard
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

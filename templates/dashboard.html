@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Crypto Vault{% endblock %}
+
+{% block content %}
+<div class="dashboard-container fade-in">
+    <!-- Header Section -->
+    <div class="header">
+        <h1>👋 Welcome, {{ user.username }}!</h1>
+        <div class="nav-links">
+            <a href="{{ url_for('profile') }}">👤 Profile</a>
+            <a href="{{ url_for('search') }}">🔍 Search</a>
+            <a href="{{ url_for('update_password') }}">🔑 Password</a>
+            <a href="{{ url_for('logout') }}">🚪 Logout</a>
+        </div>
+    </div>
+
+    <!-- Posts Section -->
+    <div class="posts-section">
+        <!-- Post Form -->
+        <div class="post-form">
+            <h2 style="margin-bottom: 20px; color: #333;">📝 Create New Post</h2>
+            <form method="POST">
+                <div class="form-group">
+                    <label for="message">Your message:</label>
+                    <textarea name="message" id="message" 
+                             placeholder="Share your thoughts securely..." 
+                             required data-max-length="1000" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn">
+                    🔒 Encrypt & Post
+                </button>
+            </form>
+        </div>
+
+        <!-- Posts List -->
+        <div class="posts-list">
+            <h2 style="margin-bottom: 20px; color: #333;">📋 Your Encrypted Posts</h2>
+            
+            {% if posts %}
+                {% for post in posts %}
+                <div class="post">
+                    <div class="post-content">
+                        <div class="post-message">{{ post.message }}</div>
+                        <div class="post-meta">
+                            <span>📅 {{ post.created_at }}</span>
+                            <span>❤️ {{ post.likes }} likes</span>
+                        </div>
+                    </div>
+                    <div class="post-actions">
+                        <button class="like-btn" data-post-id="{{ post.id }}">
+                            👍 Like (<span class="likes-count">{{ post.likes }}</span>)
+                        </button>
+                        <button class="delete-btn" data-post-id="{{ post.id }}">
+                            🗑️ Delete
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="post" style="text-align: center; background: #f8f9fa;">
+                    <div class="post-content">
+                        <h3 style="color: #6c757d; margin: 0;">📭 No posts yet</h3>
+                        <p style="color: #6c757d; margin: 10px 0 0 0;">
+                            Create your first encrypted post above!
+                        </p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
